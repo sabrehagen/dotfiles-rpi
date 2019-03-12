@@ -1,12 +1,8 @@
-# Script is run as root to create the host user
-if [ $USER != "root" ]; then
-  echo "Host configuration script must be run as root!"
-  exit 1
-fi
-
 # Install musikcube
 wget -O musickube.deb -nv https://github.com/clangen/musikcube/releases/download/0.63.0/musikcube_0.63.0_rpi_stretch_armhf.deb && \
-  dpkg -i musickube.deb
+  sudo dpkg -i musickube.deb && \
+  sudo apt-get install -qq --fix-broken && \
+  rm musickube.deb
 
 # Clone dotfiles configuration
 vcsh clone https://sabrehagen@github.com/sabrehagen/dotfiles-git.git
@@ -20,7 +16,7 @@ vcsh clone https://sabrehagen@github.com/sabrehagen/dotfiles-xdg.git
 vcsh clone https://sabrehagen@github.com/sabrehagen/dotfiles-zsh.git
 
 # Install rpi applications
-cp -r ~/.config/rpi/builds/omxplayer /
+sudo cp -r ~/.config/rpi/builds/omxplayer /
 
 # Check for updates
 sudo rpi-update
